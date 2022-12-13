@@ -30,7 +30,7 @@ public class UE {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UE ue = (UE) o;
-        return myIntitule.equals(ue.myIntitule);
+        return heuresCM == ue.heuresCM && heuresTD == ue.heuresTD && heuresTP == ue.heuresTP && myIntitule.equals(ue.myIntitule);
     }
 
     @Override

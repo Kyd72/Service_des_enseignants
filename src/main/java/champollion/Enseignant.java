@@ -100,8 +100,8 @@ public class Enseignant extends Personne {
             if (intervention.getUe().equals(ue) && intervention.getType().equals(type)){
 
                 switch (type) {
-                    case CM :heureEffectuees+=intervention.getDuree()*1.5; break;
-                    case TP :heureEffectuees+=intervention.getDuree()*0.75; break;
+                    case CM :heureEffectuees+=intervention.getDuree(); break;
+                    case TP :heureEffectuees+=intervention.getDuree(); break;
                     case TD : heureEffectuees+=intervention.getDuree();break;
                 }
 
@@ -126,7 +126,7 @@ public class Enseignant extends Personne {
 
     public boolean enSousService (){
 
-        return 192-this.heuresPrevues()<0;
+        return 192-this.heuresPrevues()>0;
 
     };
 
