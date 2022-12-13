@@ -1,11 +1,16 @@
 package champollion;
 
+import java.util.*;
+
 public class Enseignant extends Personne {
 
     // TODO : rajouter les autres méthodes présentes dans le diagramme UML
 
+    private final Map<UE,ServicePrevu> mapServicePrevu;
+
     public Enseignant(String nom, String email) {
         super(nom, email);
+        this.mapServicePrevu=new HashMap<>();
     }
 
     /**
@@ -17,8 +22,22 @@ public class Enseignant extends Personne {
      *
      */
     public int heuresPrevues() {
-        // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+
+        double heuresCmEquivalentTD=0;
+        double heuresTPequivalentTD=0;
+        double heuresTD=0;
+        ServicePrevu s;
+
+        for (Map.Entry<UE,ServicePrevu> service : mapServicePrevu.entrySet()){
+            s= service.getValue();
+            heuresCmEquivalentTD=heuresCmEquivalentTD+(s.getVolumeCM()*1.5);
+            heuresTPequivalentTD=heuresTPequivalentTD+(s.getVolumeTP()*0.75);
+            heuresTD=heuresTD+(s.getVolumeTD());
+
+        }
+
+        return (int) (heuresCmEquivalentTD+heuresTD+heuresTPequivalentTD);
+
     }
 
     /**
@@ -31,8 +50,23 @@ public class Enseignant extends Personne {
      *
      */
     public int heuresPrevuesPourUE(UE ue) {
-        // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+
+        double heuresCmEquivalentTD;
+        double heuresTPequivalentTD;
+        double heuresTD;
+        ServicePrevu s;
+        if (mapServicePrevu.containsKey(ue)){
+             s = mapServicePrevu.get(ue);
+            heuresCmEquivalentTD=(s.getVolumeCM()*1.5);
+            heuresTPequivalentTD=(s.getVolumeTP()*0.75);
+            heuresTD=(s.getVolumeTD());
+
+            return (int) (heuresCmEquivalentTD+heuresTD+heuresTPequivalentTD);
+
+        }
+
+        else return 0;
+
     }
 
     /**
@@ -44,8 +78,11 @@ public class Enseignant extends Personne {
      * @param volumeTP le volume d'heures de TP
      */
     public void ajouteEnseignement(UE ue, int volumeCM, int volumeTD, int volumeTP) {
-        // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        if (mapServicePrevu.containsKey(ue)){
+            mapServicePrevu.get(ue).addVolume(volumeCM,volumeTD,volumeTP);
+        }
+
+        else {mapServicePrevu.put(ue,new ServicePrevu(volumeCM,volumeTD,volumeTP));}
     }
 
 }
