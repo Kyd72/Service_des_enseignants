@@ -7,10 +7,12 @@ public class Enseignant extends Personne {
     // TODO : rajouter les autres méthodes présentes dans le diagramme UML
 
     private final Map<UE,ServicePrevu> mapServicePrevu;
+    private List<Intervention> listeInterventions;
 
     public Enseignant(String nom, String email) {
         super(nom, email);
         this.mapServicePrevu=new HashMap<>();
+        this.listeInterventions=new ArrayList<>();
     }
 
     /**
@@ -84,5 +86,48 @@ public class Enseignant extends Personne {
 
         else {mapServicePrevu.put(ue,new ServicePrevu(volumeCM,volumeTD,volumeTP));}
     }
+
+    public void ajouteIntervention(Intervention inter){
+        this.listeInterventions.add(inter);
+    }
+
+    public int resteAPlanifier(UE ue, TypeIntervention type){
+
+        double heureEffectuees =0;
+        int resteAPlanifier =0;
+
+        for (Intervention intervention : listeInterventions){
+            if (intervention.getUe().equals(ue) && intervention.getType().equals(type)){
+
+                switch (type) {
+                    case CM :heureEffectuees+=intervention.getDuree()*1.5; break;
+                    case TP :heureEffectuees+=intervention.getDuree()*0.75; break;
+                    case TD : heureEffectuees+=intervention.getDuree();break;
+                }
+
+
+
+
+
+            }
+        }
+
+
+
+        switch (type) {
+            case CM :resteAPlanifier = mapServicePrevu.get(ue).getVolumeCM() - ((int)heureEffectuees); break;
+            case TP :resteAPlanifier = mapServicePrevu.get(ue).getVolumeTP() - ((int)heureEffectuees); break;
+            case TD :resteAPlanifier = mapServicePrevu.get(ue).getVolumeTD() - ((int)heureEffectuees); break;
+        }
+
+        return resteAPlanifier;
+
+    }
+
+    public boolean enSousService (){
+
+        return 192-this.heuresPrevues()<0;
+
+    };
 
 }

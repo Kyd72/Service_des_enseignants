@@ -4,9 +4,20 @@ import java.util.Objects;
 
 public class UE {
     private final String myIntitule;
+    private int heuresCM=0;
+    private int heuresTD=0;
+    private int heuresTP=0;
+
 
     public UE(String intitule) {
         myIntitule = intitule;
+    }
+
+    public UE(String myIntitule, int heuresCM, int heuresTD, int heuresTP) {
+        this.myIntitule = myIntitule;
+        this.heuresCM = heuresCM;
+        this.heuresTD = heuresTD;
+        this.heuresTP = heuresTP;
     }
 
     public String getIntitule() {
